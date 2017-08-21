@@ -6,24 +6,24 @@
 /*   By: amittal <amittal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 21:29:34 by amittal           #+#    #+#             */
-/*   Updated: 2017/08/21 01:07:55 by amittal          ###   ########.fr       */
+/*   Updated: 2017/08/21 01:19:46 by amittal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
-void	ft_ls_assert_symlinks(t_file *file)
+void	ft_ls_assert_symlimks(t_file *file)
 {
 	file->lname = NULL;
-	if (file->ls->follow && file->type == IS_LINK)
+	if (file->ls->follow && file->type == IS_LINK
 		&& !file->ls->options.is_full_show
 		&& !file->ls->options.is_ordered_by_time)
 	{
-		file->exists = (stat(file->path, &file->stat) != -1)
+		file->exists = (stat(file->path, &file->stat) != -1);
 		if (!file->exists)
-			file->exists = (lstat(file->path, &file->stat) != -1)
+			file->exists = (lstat(file->path, &file->stat) != -1);
 		else
-			file-type = file->stat.st_mode & s_IFMT;
+			file->type = file->stat.st_mode & S_IFMT;
 	}
 	if (file->type == IS_LINK)
 	{
@@ -45,8 +45,8 @@ t_file	*ft_ls_init_file(t_ls *ls, int is_first_level, char *name, char *path)
 	file->exists = (lstat(path, &file->stat) != -1);
 	file->type = 0;
 	file->type = file->stat.st_mode & S_IFMT;
-	ft_ls_assert_symlinks(file);
-	file->owner = (getpwuid(file->stat.st_uid)) ? 
+	ft_ls_assert_symlimks(file);
+	file->owner = (getpwuid(file->stat.st_uid)) ?
 		ft_strdup(getpwuid(file->stat.st_uid)->pw_name) :
 		ft_itoa(file->stat.st_uid);
 	file->group = (getgrgid(file->stat.st_gid)) ?
@@ -55,6 +55,8 @@ t_file	*ft_ls_init_file(t_ls *ls, int is_first_level, char *name, char *path)
 	file->has_permission = 1;
 	file->major = (file->type == IS_CHAR || file->type == IS_BLOCK) ?
 		(int)MAJOR(file->stat.st_rdev) : 0;
+	file->minor = (file->type == IS_CHAR || file->type == IS_BLOCK) ?
+		(int)MINOR(file->stat.st_rdev) : 0;
 	return (file);
 }
 
@@ -111,14 +113,14 @@ void	ft_ls_parse_files(t_ls *ls, int ac, char **av)
 	}
 	while (i < ac)
 	{
-		file = ft_ls_init_file(ls, 1, ft_strdup(av[i],, ft_strdup[i]));
+		file = ft_ls_init_file(ls, 1, ft_strdup(av[i]), ft_strdup(av[i]));
 		if (!file->exists)
 			ft_lstadd(&(ls->errors), ft_lstnew(file, sizeof(t_file)));
 		else if (file->type == IS_DIR)
 			ft_lstadd(&(ls->folders), ft_lstnew(file, sizeof(t_file)));
 		else
-			ft_lstadd(&(ls->nonfolders), ft_lstnew(file, sizeof(t_file)));
+			ft_lstadd(&(ls->non_folders), ft_lstnew(file, sizeof(t_file)));
 		i++;
+		ft_ls_parse_files_free(&file);
 	}
-	ft_ls_parse_files_free(&file);
 }

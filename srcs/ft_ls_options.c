@@ -6,7 +6,7 @@
 /*   By: amittal <amittal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 20:42:51 by amittal           #+#    #+#             */
-/*   Updated: 2017/08/20 21:17:17 by amittal          ###   ########.fr       */
+/*   Updated: 2017/08/21 01:22:36 by amittal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,23 +43,24 @@ int		ft_ls_parse_options_helper(t_ls *ls, char option)
 	ls->options.is_recursive = (option == 'R') ? 1 : ls->options.is_recursive;
 	ls->options.is_all_files = (option == 'a') ? 1 : ls->options.is_all_files;
 	ls->options.is_reverse = (option == 'r') ? 1 : ls->options.is_reverse;
-	ls->options.is_ordered_by_time = (option == 't') ? 1 : ls->options.is_ordered_by_time;
-	if (options == 'g')
+	ls->options.is_ordered_by_time = (option == 't') ? 1 :
+		ls->options.is_ordered_by_time;
+	if (option == 'g')
 	{
 		ls->options.is_full_show = 1;
 		ls->options.skip_group = 1;
 	}
-	if (options == 'u')
+	if (option == 'u')
 	{
 		ls->options.time_creation = 0;
 		ls->options.time_last_access = 1;
 	}
-	if (options == 'U')
+	if (option == 'U')
 	{
 		ls->options.time_last_access = 0;
 		ls->options.time_creation = 1;
 	}
-	return(ft_ls_options_is_in("RUaglrtyu1", option))
+	return (ft_ls_options_is_in("RUaglrtu1", option));
 }
 
 void	ft_ls_parse_options(t_ls *ls, int ac, char **av)
@@ -79,7 +80,7 @@ void	ft_ls_parse_options(t_ls *ls, int ac, char **av)
 		}
 		while (av[i][n])
 		{
-			if(!ft_ls_parse_options_helper(ls, av[i][n]))
+			if (!ft_ls_parse_options_helper(ls, av[i][n]))
 				ft_ls_errors_wrong_option(av[i][n]);
 			n++;
 		}

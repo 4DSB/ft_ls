@@ -6,7 +6,7 @@
 /*   By: amittal <amittal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 17:36:51 by amittal           #+#    #+#             */
-/*   Updated: 2017/08/21 01:06:42 by amittal          ###   ########.fr       */
+/*   Updated: 2017/08/21 01:25:01 by amittal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		main(int argc, char **argv)
 	ft_ls_init_env(&ls);
 	ft_ls_init_options(&ls);
 	ft_ls_parse_options(&ls, argc, argv);
-	ft_ls_parse_files(&ls, ac, av);
+	ft_ls_parse_files(&ls, argc, argv);
 	ls.follow = 0;
 	ft_lstsort(&(ls.errors), &cmp_asc, &get_name);
 	ft_ls_sort(&ls, &ls.non_folders);
@@ -70,4 +70,7 @@ int		main(int argc, char **argv)
 	ft_ls_process_files(ls.errors, 0);
 	if (ls.non_folders && ls.options.is_all_files)
 		get_max_values(ls.non_folders);
+	ft_ls_process_files(ls.non_folders, 0);
+	ft_ls_process_files(ls.folders, 1);
+	return (0);
 }

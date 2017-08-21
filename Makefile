@@ -6,13 +6,13 @@
 #    By: amittal <amittal@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/20 17:15:55 by amittal           #+#    #+#              #
-#    Updated: 2017/08/20 17:34:58 by amittal          ###   ########.fr        #
+#    Updated: 2017/08/21 01:11:38 by amittal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME            =   ft_ls
-LIB             =   ./libft/libft.a
-_SRC            =   ft_ls.c \
+NAME			= ft_ls
+LIB				=	./libft/libft.a
+_SRC			= 	ft_ls.c \
 					ft_ls_options.c \
 					ft_ls_errors.c \
 					ft_ls_free.c \
@@ -27,29 +27,34 @@ _SRC            =   ft_ls.c \
 					show/ft_ls_show_str.c \
 					ft_ls_read.c \
 					ft_ls_sort.c \
-					ft_ls_sized.Created
+					ft_ls_sizes.c
 
-INCLUDES        =   -I./libft/includes/ -I./includes/
-SRC             =   $(addprefix srcs/,$(_SRC))
-OBJ             =   $(SRC:.c=.0)
-CFLAGS          =   -Wall -Wextra -Werror -g -ggdb
+INCLUDES		= -I./libft/includes/ -I./includes/
+SRC				= $(addprefix srcs/,$(_SRC))
+OBJ				= $(SRC:.c=.o)
+CFLAGS			= -Wall -Wextra -Werror -g -ggdb
 
-all:  $(NAME)
+all: $(NAME)
 
-$(NAME):  $(OBJ)
+$(NAME): $(OBJ)
 	make -C ./libft/
 	@gcc $(CFLAGS) $(OBJ) $(LIB) $(INCLUDES) -o $(NAME)
-	@echo $(NAME)" COMPILED"
+	@echo $(NAME)" compiled"
 
 
-%.o:  %.c
+%.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
 
-.PHONY: clean fclean Created
+.PHONY: clean fclean re
 
-clean:	clean
+clean:
+	@rm -f $(OBJ)
+	@make clean -C libft
+	@echo "Clean all .o files"
+
+fclean:	clean
 	@make fclean -C libft
 	@/bin/rm -rf $(NAME)
-	@echo "Wiped *.o and *.a"
+	@echo "Clean all .o and .a"
 
 re: fclean all

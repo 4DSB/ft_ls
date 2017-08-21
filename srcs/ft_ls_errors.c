@@ -6,15 +6,15 @@
 /*   By: amittal <amittal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 21:18:47 by amittal           #+#    #+#             */
-/*   Updated: 2017/08/21 00:13:27 by amittal          ###   ########.fr       */
+/*   Updated: 2017/08/21 01:23:45 by amittal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
-void	ft_ls_wrong_option(char option)
+void	ft_ls_errors_wrong_option(char option)
 {
-	ft_putstr_fd("ls: illegal option -- ", 2)
+	ft_putstr_fd("ls: illegal option -- ", 2);
 	ft_putchar_fd(option, 2);
 	ft_putchar_fd('\n', 2);
 	ft_ls_errors_usage();

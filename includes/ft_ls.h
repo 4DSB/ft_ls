@@ -6,7 +6,7 @@
 /*   By: amittal <amittal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 17:48:30 by amittal           #+#    #+#             */
-/*   Updated: 2017/08/20 20:37:38 by amittal          ###   ########.fr       */
+/*   Updated: 2017/08/21 01:18:01 by amittal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@
 # include <errno.h>
 
 # define MONTH(m)	((m) * 30 * 24 * 60 * 60)
-# define MAJOR(m)	((__int32_t)(((__unit_32_t)(m)) >> 24) & 0xff)
+# define MAJOR(m)	((__int32_t)(((__uint32_t)(m)) >> 24) & 0xff)
 # define MINOR(m)	((__int32_t)((m) & 0xffffff))
 
-typedef strucr		s_ls_options
+typedef struct		s_ls_options
 {
 	int				is_raw;
 	int				is_full_show;
